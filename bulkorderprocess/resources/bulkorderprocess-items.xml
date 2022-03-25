@@ -40,6 +40,15 @@
 						</attribute>
 					</attributes>
 				</itemtype>
+				<itemtype code="CartEntry" autocreate="false" generate="false" >
+					<attributes>
+						<attribute qualifier="addressFile" type="Media">
+							<description>type of cart either bulk or normal</description>
+							<modifiers read="true" write="true" initial="false" optional="true"/>
+							<persistence type="property"/>
+						</attribute>
+					</attributes>
+				</itemtype>
 			</typegroup>
 	</itemtypes>
 </items>

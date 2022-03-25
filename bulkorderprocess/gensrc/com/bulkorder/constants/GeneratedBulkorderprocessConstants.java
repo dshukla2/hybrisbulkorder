@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Mar 25, 2022, 10:06:49 PM                   ---
+ * --- Generated at Mar 25, 2022, 10:47:19 PM                   ---
  * ----------------------------------------------------------------
  */
 package com.bulkorder.constants;
@@ -17,6 +17,10 @@ public class GeneratedBulkorderprocessConstants
 	public static class Attributes
 	{
 		public static class Cart
+		{
+			public static final String ADDRESSFILE = "addressFile".intern();
+		}
+		public static class CartEntry
 		{
 			public static final String ADDRESSFILE = "addressFile".intern();
 		}

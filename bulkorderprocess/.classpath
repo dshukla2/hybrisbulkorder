@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="src" path="/acceleratorservices"/>
+	<classpathentry exported="true" kind="src" path="/ticketsystem"/>
+	<classpathentry exported="true" kind="lib" path="resources"/>
+	<classpathentry kind="src" output="eclipsebin/classes" path="src"/>
+	<classpathentry kind="src" output="eclipsebin/classes" path="testsrc"/>
+	<classpathentry kind="src" output="eclipsebin/classes" path="gensrc"/>
+	<classpathentry kind="src" path="/platform"/>
+	<classpathentry kind="src" path="/webservicescommons"/>
+	<classpathentry kind="src" path="/cmsfacades"/>
+	<classpathentry kind="src" path="/cmswebservices"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
-
-				
-				
-	<classpathentry exported="true" kind="src" path="/acceleratorservices" />
-	<classpathentry exported="true" kind="src" path="/ticketsystem" />
-	<classpathentry exported="true" kind="lib" path="resources" />
-	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="src" />
-	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="testsrc" />
-	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="gensrc" />
-	<classpathentry exported="false" kind="src" path="/platform" />
-				
 </classpath>
-				

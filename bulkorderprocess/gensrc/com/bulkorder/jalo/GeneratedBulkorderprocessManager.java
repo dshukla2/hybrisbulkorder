@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Mar 25, 2022, 10:06:49 PM                   ---
+ * --- Generated at Mar 25, 2022, 10:47:19 PM                   ---
  * ----------------------------------------------------------------
  */
 package com.bulkorder.jalo;
@@ -14,7 +14,9 @@ import de.hybris.platform.jalo.enumeration.EnumerationValue;
 import de.hybris.platform.jalo.extension.Extension;
 import de.hybris.platform.jalo.media.Media;
 import de.hybris.platform.jalo.order.AbstractOrder;
+import de.hybris.platform.jalo.order.AbstractOrderEntry;
 import de.hybris.platform.jalo.order.Cart;
+import de.hybris.platform.jalo.order.CartEntry;
 import de.hybris.platform.ordersplitting.jalo.ConsignmentProcess;
 import de.hybris.platform.processengine.jalo.BusinessProcess;
 import java.util.Collections;
@@ -39,6 +41,9 @@ public abstract class GeneratedBulkorderprocessManager extends Extension
 		tmp = new HashMap<String, AttributeMode>();
 		tmp.put("addressFile", AttributeMode.INITIAL);
 		ttmp.put("de.hybris.platform.jalo.order.Cart", Collections.unmodifiableMap(tmp));
+		tmp = new HashMap<String, AttributeMode>();
+		tmp.put("addressFile", AttributeMode.INITIAL);
+		ttmp.put("de.hybris.platform.jalo.order.CartEntry", Collections.unmodifiableMap(tmp));
 		DEFAULT_INITIAL_ATTRIBUTES = ttmp;
 	}
 	@Override
@@ -85,6 +90,42 @@ public abstract class GeneratedBulkorderprocessManager extends Extension
 	 * @param value the addressFile - type of cart either bulk or normal
 	 */
 	public void setAddressFile(final Cart item, final Media value)
+	{
+		setAddressFile( getSession().getSessionContext(), item, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>CartEntry.addressFile</code> attribute.
+	 * @return the addressFile - type of cart either bulk or normal
+	 */
+	public Media getAddressFile(final SessionContext ctx, final CartEntry item)
+	{
+		return (Media)item.getProperty( ctx, BulkorderprocessConstants.Attributes.CartEntry.ADDRESSFILE);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>CartEntry.addressFile</code> attribute.
+	 * @return the addressFile - type of cart either bulk or normal
+	 */
+	public Media getAddressFile(final CartEntry item)
+	{
+		return getAddressFile( getSession().getSessionContext(), item );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>CartEntry.addressFile</code> attribute. 
+	 * @param value the addressFile - type of cart either bulk or normal
+	 */
+	public void setAddressFile(final SessionContext ctx, final CartEntry item, final Media value)
+	{
+		item.setProperty(ctx, BulkorderprocessConstants.Attributes.CartEntry.ADDRESSFILE,value);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>CartEntry.addressFile</code> attribute. 
+	 * @param value the addressFile - type of cart either bulk or normal
+	 */
+	public void setAddressFile(final CartEntry item, final Media value)
 	{
 		setAddressFile( getSession().getSessionContext(), item, value );
 	}
