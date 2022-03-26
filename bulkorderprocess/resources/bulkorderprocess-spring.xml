@@ -135,6 +135,7 @@
         <property name="commercePlaceOrderMethodHooks" ref="commercePlaceOrderMethodHooks"/>
         <property name="configurationService" ref="configurationService"/>
         <property name="timeService" ref="timeService"/>
+        <property name="mediaService" ref="mediaService" />
         <property name="keyGenerator"
                   ref="#{configurationService.configuration.getProperty('commerceservices.orderCode.keyGenerator')}"/>
     </bean>

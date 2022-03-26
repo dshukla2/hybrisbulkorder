@@ -16,7 +16,6 @@ import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.core.model.user.UserModel;
-import de.hybris.platform.jalo.media.MediaManager;
 import de.hybris.platform.order.CalculationService;
 import de.hybris.platform.order.CartService;
 import de.hybris.platform.order.InvalidCartException;
@@ -27,19 +26,16 @@ import de.hybris.platform.promotions.model.PromotionResultModel;
 import de.hybris.platform.servicelayer.config.ConfigurationService;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.servicelayer.keygenerator.KeyGenerator;
+import de.hybris.platform.servicelayer.media.MediaService;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.time.TimeService;
 import de.hybris.platform.servicelayer.type.TypeService;
 import de.hybris.platform.site.BaseSiteService;
 import de.hybris.platform.store.services.BaseStoreService;
-import de.hybris.platform.util.CSVReader;
 
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
@@ -64,6 +60,7 @@ public class CreateBulkOrderFromCartStrategy implements CommercePlaceOrderStrate
 	private ExternalTaxesService externalTaxesService;
 	private List<CommercePlaceOrderMethodHook> commercePlaceOrderMethodHooks;
 	private TimeService timeService;
+	private MediaService mediaService;
 	private ConfigurationService configurationService;
 
 	@Override
@@ -331,57 +328,51 @@ public class CreateBulkOrderFromCartStrategy implements CommercePlaceOrderStrate
 	 * @param addressMedia
 	 * @return
 	 */
+
 	private List<AddressModel> getAddressFromMedia(final MediaModel addressMedia)
 	{
-		List<AddressModel> addressList = new ArrayList<AddressModel>();
+		final List<AddressModel> addressList = new ArrayList<AddressModel>();
 		try
 		{
-			final File file = MediaManager.getInstance().getMediaAsFile(addressMedia.getFolder().getQualifier(),
-					addressMedia.getLocation());
-			final CSVReader csvReader = new CSVReader(new FileReader(file));
-			while (csvReader.readNextLine())
+			final byte[] addressByteStream = getMediaService().getDataFromMedia(addressMedia);
+			final String text = new String(addressByteStream);
+			final String[] lines = text.split("\\r?\\n");
+			for (int i = 1; i < lines.length; i++)
 			{
-				final Map<Integer, String> row = csvReader.getLine();
-				addressList = getDummyAddressList();
+				final String[] record = lines[i].split(",");
+				final AddressModel address = createAddressModel(record[0], record[1], record[2], record[3], record[4], record[5],
+						record[6]);
+				addressList.add(address);
 			}
 		}
 		catch (final Exception e)
 		{
-			LOG.error("Error occured while reading file", e);
-			addressList = getDummyAddressList();
+			LOG.error("Error occured while fetching Sitemap pages from CMSsite : ", e);
 		}
-
 		return addressList;
 	}
 
 
-	private List<AddressModel> getDummyAddressList()
+	private AddressModel createAddressModel(final String firstName, final String lastName, final String email,
+			final String addLine1, final String addLine2, final String postalCode, final String town)
 	{
-		final List<AddressModel> addressList = new ArrayList<AddressModel>();
-		final AddressModel addressModel1 = (AddressModel) modelService.create(AddressModel.class);
-		final UserModel user1 = (UserModel) modelService.create(UserModel.class);
-		addressModel1.setOwner(user1);
-		addressModel1.setFirstname("firstname1");
-		addressModel1.setLastname("lastname1");
-		addressModel1.setEmail("asd@asd.com");
-		addressModel1.setLine1("line1 line 1");
-		addressModel1.setPostalcode("POSTAL");
-		addressModel1.setTown("town");
-		addressList.add(addressModel1);
-
-		final AddressModel addressModel2 = (AddressModel) modelService.create(AddressModel.class);
-		final UserModel user2 = (UserModel) modelService.create(UserModel.class);
-		addressModel2.setOwner(user2);
-		addressModel2.setFirstname("firstname1");
-		addressModel2.setLastname("lastname1");
-		addressModel2.setEmail("asd@asd.com");
-		addressModel2.setLine1("line1 line 1");
-		addressModel2.setPostalcode("POSTAL");
-		addressModel2.setTown("town");
-		addressList.add(addressModel2);
-
-		return addressList;
+		final AddressModel addressModel = (AddressModel) modelService.create(AddressModel.class);
+		final UserModel user = (UserModel) modelService.create(UserModel.class);
+		user.setUid(email);
+		addressModel.setOwner(user);
+		addressModel.setFirstname(firstName);
+		addressModel.setLastname(lastName);
+		addressModel.setEmail(email);
+		addressModel.setLine1(addLine1);
+		addressModel.setLine2(addLine2);
+		addressModel.setPostalcode(postalCode);
+		addressModel.setTown(town);
+		return addressModel;
 	}
+
+
+
+
 
 	/**
 	 * Generate a code for created order. Default implementation use {@link KeyGenerator}.
@@ -625,6 +616,23 @@ public class CreateBulkOrderFromCartStrategy implements CommercePlaceOrderStrate
 	public void setTimeService(final TimeService timeService)
 	{
 		this.timeService = timeService;
+	}
+
+	/**
+	 * @return the mediaService
+	 */
+	public MediaService getMediaService()
+	{
+		return mediaService;
+	}
+
+	/**
+	 * @param mediaService
+	 *           the mediaService to set
+	 */
+	public void setMediaService(final MediaService mediaService)
+	{
+		this.mediaService = mediaService;
 	}
 
 
