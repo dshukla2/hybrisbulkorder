@@ -11,5 +11,6 @@
 	<classpathentry kind="src" path="/webservicescommons"/>
 	<classpathentry kind="src" path="/cmsfacades"/>
 	<classpathentry kind="src" path="/cmswebservices"/>
+	<classpathentry kind="lib" path="/CXCOMM190500P_13-70004140/hybris/bin/platform/bootstrap/bin/models.jar"/>
 	<classpathentry kind="output" path="eclipsebin/notused"/>
 </classpath>

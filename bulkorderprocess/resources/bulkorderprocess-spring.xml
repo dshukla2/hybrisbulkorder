@@ -115,9 +115,16 @@
 	</bean>
 	
 	<alias name="bulkOrderMediaFacade" alias="bulkOrderMediaFacade" />
-	<bean id="bulkOrderMediaFacade" class="com.bulkorder.facade.BulkOrderLoadMediaFacade.BulkOrderLoadMediaFacade" parent="mediaFacade">
+	<bean id="bulkOrderMediaFacade" class="com.bulkorder.facade.BulkOrderLoadMediaFacade" parent="mediaFacade">
 		<property name="cartService" ref="cartService"/>
 	</bean>
-			
-
+	
+	<alias alias="createOrderFromCartStrategy" name="defaultCreateBulkOrderFromCartStrategy"/>
+    <bean id="defaultCreateBulkOrderFromCartStrategy"
+          class="com.bulkorder.strategy.impl.CreateBulkOrderFromCartStrategy">
+        <property name="cartValidator" ref="cartValidator"/>
+        <property name="cloneAbstractOrderStrategy" ref="cloneAbstractOrderStrategy"/>
+        <property name="keyGenerator"
+                  ref="#{configurationService.configuration.getProperty('commerceservices.orderCode.keyGenerator')}"/>
+    </bean>
 </beans>

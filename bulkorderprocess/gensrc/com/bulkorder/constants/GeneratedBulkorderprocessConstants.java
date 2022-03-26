@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Mar 25, 2022, 10:47:19 PM                   ---
+ * --- Generated at Mar 26, 2022, 8:53:57 AM                    ---
  * ----------------------------------------------------------------
  */
 package com.bulkorder.constants;
@@ -29,6 +29,13 @@ public class GeneratedBulkorderprocessConstants
 			public static final String DONE = "done".intern();
 			public static final String WAITINGFORCONSIGNMENT = "waitingForConsignment".intern();
 			public static final String WAREHOUSECONSIGNMENTSTATE = "warehouseConsignmentState".intern();
+		}
+	}
+	public static class Enumerations
+	{
+		public static class OrderStatus
+		{
+			public static final String BULKORDER = "BULKORDER".intern();
 		}
 	}
 	

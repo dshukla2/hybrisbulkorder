@@ -4,7 +4,12 @@
 -->
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 			xsi:noNamespaceSchemaLocation="items.xsd">
-	
+	<enumtypes>
+		<enumtype code="OrderStatus" autocreate="false" generate="false"
+			dynamic="true">
+			<value code="BULKORDER" />
+		</enumtype>
+	</enumtypes>
 	<itemtypes>
 			<itemtype code="ConsignmentProcess" autocreate="false" generate="false" >
 			<attributes>
@@ -26,8 +31,7 @@
 					<description>State of warehouse process.</description>
 					<persistence type="property" />
 					<modifiers initial="false" optional="true" />
-				</attribute>
-					
+				</attribute>					
 			</attributes>
 			</itemtype>
 			<typegroup name="BulkOrder">

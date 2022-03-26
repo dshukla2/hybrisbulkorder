@@ -8,6 +8,9 @@
                 		
         
         <requires-extension name="acceleratorservices"/>
+        <requires-extension name="cmsfacades"/>
+        <requires-extension name="cmswebservices"/>
+        <requires-extension name="webservicescommons"/>
                 		
         
         <requires-extension name="ticketsystem"/>

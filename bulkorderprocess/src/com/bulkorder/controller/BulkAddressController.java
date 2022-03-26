@@ -5,11 +5,14 @@ package com.bulkorder.controller;
 
 
 
-import de.hybris.platform.cmsfacades.data.MediaData;
+
+import static de.hybris.platform.cmswebservices.constants.CmswebservicesConstants.API_VERSION;
+
 import de.hybris.platform.cmsfacades.dto.MediaFileDto;
 import de.hybris.platform.cmsfacades.exception.ValidationException;
 import de.hybris.platform.cmsfacades.header.LocationHeaderResource;
 import de.hybris.platform.cmswebservices.constants.CmswebservicesConstants;
+import de.hybris.platform.cmswebservices.data.MediaData;
 import de.hybris.platform.webservicescommons.errors.exceptions.WebserviceValidationException;
 import de.hybris.platform.webservicescommons.mapping.DataMapper;
 
@@ -49,11 +52,11 @@ import io.swagger.annotations.ApiResponses;
  */
 
 @Controller
-@RequestMapping(value = "/LoadAddress")
+@RequestMapping(API_VERSION + "/catalogs/{catalogId}/versions/{versionId}" + BulkAddressController.MEDIA_URI_PATH)
 public class BulkAddressController
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BulkAddressController.class);
-	public static final String MEDIA_URI_PATH = "/media";
+	public static final String MEDIA_URI_PATH = "/media/loadAddress";
 
 
 	@Resource
@@ -72,7 +75,7 @@ public class BulkAddressController
 	@ApiResponses(
 	{ //
 			@ApiResponse(code = 400, message = "When an error occurs parsing the MultipartFile (IOException) or when the media query parameters provided contain validation errors (WebserviceValidationException)"),
-			@ApiResponse(code = 200, message = "The newly created Media item", response = MediaData.class) })
+			@ApiResponse(code = 200, message = "The newly created Media item", response = de.hybris.platform.cmswebservices.data.MediaData.class) })
 	@ApiImplicitParams(
 	{ //
 			@ApiImplicitParam(name = "catalogId", value = "The catalog name", required = true, dataType = "string", paramType = "path"),

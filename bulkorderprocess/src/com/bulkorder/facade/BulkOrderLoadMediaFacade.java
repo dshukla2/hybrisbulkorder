@@ -11,11 +11,13 @@ import de.hybris.platform.core.model.order.CartEntryModel;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.order.CartService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.google.common.base.Preconditions;
-import com.microsoft.sqlserver.jdbc.StringUtils;
+
+
 
 
 /**
@@ -52,7 +54,7 @@ public class BulkOrderLoadMediaFacade extends DefaultMediaFacade implements Bulk
 		getModelService().save(mediaModel);
 		final CartModel cart = getCartService().getSessionCart();
 
-		if (StringUtils.isEmpty(CartEntryCode))
+		if (StringUtils.isBlank(CartEntryCode))
 		{
 			cart.setAddressFile(mediaModel);
 			getModelService().save(cart);
