@@ -9,7 +9,6 @@ import de.hybris.platform.cmsfacades.data.MediaData;
 import de.hybris.platform.cmsfacades.dto.MediaFileDto;
 import de.hybris.platform.cmsfacades.exception.ValidationException;
 import de.hybris.platform.cmsfacades.header.LocationHeaderResource;
-import de.hybris.platform.cmsfacades.media.MediaFacade;
 import de.hybris.platform.cmswebservices.constants.CmswebservicesConstants;
 import de.hybris.platform.webservicescommons.errors.exceptions.WebserviceValidationException;
 import de.hybris.platform.webservicescommons.mapping.DataMapper;
@@ -34,6 +33,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bulkorder.facade.BulkMediaFacade;
+
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -56,7 +57,7 @@ public class BulkAddressController
 
 
 	@Resource
-	private MediaFacade mediaFacade;
+	private BulkMediaFacade bulkOrderMediaFacade;
 
 	@Resource
 	private LocationHeaderResource locationHeaderResource;
@@ -85,8 +86,11 @@ public class BulkAddressController
 			@PathVariable("catalogId")
 			final String catalogId,
 			@ApiParam(value = "The unique identifier of the cart for which to link the new media.", required = true) //
-			@PathVariable("cartId")
+			@RequestParam("cartId")
 			final String cartId,
+			@ApiParam(value = "The unique identifier of the cart for which to link the new media.", required = true) //
+			@RequestParam("cartEntryId")
+			final String cartEntryId,
 			@ApiParam(value = "The specific catalog version to which the new media will be associated to.", required = true) //
 			@PathVariable("versionId")
 			final String versionId,
@@ -107,9 +111,7 @@ public class BulkAddressController
 			final de.hybris.platform.cmsfacades.data.MediaData convertedMediaData = //
 					getDataMapper().map(media, de.hybris.platform.cmsfacades.data.MediaData.class);
 			final de.hybris.platform.cmsfacades.data.MediaData newMedia = //
-					getMediaFacade().addMedia(convertedMediaData, getFile(multiPart, multiPart.getInputStream()));
-
-			getMediaFacade().getMediaByUUID(newMedia.getUuid());
+					getMediaFacade().addMedia(convertedMediaData, getFile(multiPart, multiPart.getInputStream()), cartId, cartEntryId);
 
 			response.addHeader(CmswebservicesConstants.HEADER_LOCATION,
 					getLocationHeaderResource().createLocationForChildResource(request, newMedia.getCode()));
@@ -134,14 +136,14 @@ public class BulkAddressController
 		return mediaFile;
 	}
 
-	protected MediaFacade getMediaFacade()
+	protected BulkMediaFacade getMediaFacade()
 	{
-		return mediaFacade;
+		return bulkOrderMediaFacade;
 	}
 
-	public void setMediaFacade(final MediaFacade mediaFacade)
+	public void setMediaFacade(final BulkMediaFacade mediaFacade)
 	{
-		this.mediaFacade = mediaFacade;
+		this.bulkOrderMediaFacade = mediaFacade;
 	}
 
 	protected LocationHeaderResource getLocationHeaderResource()

@@ -113,5 +113,11 @@
 		<property name="businessProcessService" ref="businessProcessService"/>
 		<property name="sessionService" ref="sessionService"/>
 	</bean>
+	
+	<alias name="bulkOrderMediaFacade" alias="bulkOrderMediaFacade" />
+	<bean id="bulkOrderMediaFacade" class="com.bulkorder.facade.BulkOrderLoadMediaFacade.BulkOrderLoadMediaFacade" parent="mediaFacade">
+		<property name="cartService" ref="cartService"/>
+	</bean>
+			
 
 </beans>
