@@ -124,6 +124,9 @@
           class="com.bulkorder.strategy.impl.CreateBulkOrderFromCartStrategy">
         <property name="cartValidator" ref="cartValidator"/>
         <property name="cloneAbstractOrderStrategy" ref="cloneAbstractOrderStrategy"/>
+        <property name="cartService" ref="cartService"/>
+        <property name="typeService" ref="typeService"/>
+        <property name="modelService" ref="modelService"/>
         <property name="keyGenerator"
                   ref="#{configurationService.configuration.getProperty('commerceservices.orderCode.keyGenerator')}"/>
     </bean>
